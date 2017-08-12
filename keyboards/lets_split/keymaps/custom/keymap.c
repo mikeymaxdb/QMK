@@ -36,8 +36,6 @@ enum custom_keycodes {
 #define SUP_6 ACTION_MODS_KEY(MOD_LGUI, KC_6)
 #define SUP_7 ACTION_MODS_KEY(MOD_LGUI, KC_7)
 
-#define CTESC ACTION_MODS_TAP_KEY(MOD_LCTL, KC_ESC)
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty

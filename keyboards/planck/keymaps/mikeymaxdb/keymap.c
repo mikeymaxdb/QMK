@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Navigation */
 [_NAV] =  {
-  {_______, SUP_1,   SUP_2,   SUP_3,   SUP_4,   SUP_5,   SUP_6,   SUP_7, _______, _______, _______, OSL(ADJUST)},
+  {_______, SUP_1,   SUP_2,   SUP_3,   SUP_4,   SUP_5,   SUP_6,   SUP_7, _______, _______, _______, QWERTY_LY},
   {KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8, KC_F9,   KC_F10,  KC_F11,  KC_F12},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ }
@@ -214,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Navigation Lydia */
 [_NAV_LY] =  {
-  {_______, SUP_1,   SUP_2,   SUP_3,   SUP_4,   SUP_5,   SUP_6,   SUP_7, _______, _______, _______, OSL(ADJUST)},
+  {_______, SUP_1,   SUP_2,   SUP_3,   SUP_4,   SUP_5,   SUP_6,   SUP_7, _______, _______, _______, QWERTY},
   {KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8, KC_F9,   KC_F10,  KC_F11,  KC_F12},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_UP, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT }
@@ -256,7 +256,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case QWERTY_LY:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-          PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
+          PLAY_NOTE_ARRAY(tone_dvorak, false, 0);
         #endif
         persistent_default_layer_set(1UL<<_QWERTY_LY);
       }
@@ -296,14 +296,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_NAV);
       } else {
         layer_off(_NAV);
+        layer_off(_NAV_LY);
       }
       return false;
       break;
     case ADJUST:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
-        #endif
         layer_on(_ADJUST);
       } else {
         layer_off(_ADJUST);
@@ -337,6 +335,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_NAV_LY);
       } else {
         layer_off(_NAV_LY);
+        layer_off(_NAV);
       }
       return false;
       break;

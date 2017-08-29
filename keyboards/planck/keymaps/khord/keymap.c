@@ -47,7 +47,7 @@ enum planck_keycodes {
 #define M_BRDFT M(MACRO_BREATH_DEFAULT)
 // Tap Dance Declarations
 enum {
-  ESC_CAP = 0,
+  SFT_CAP = 0,
   LFT_HOM,
   DWN_PDN,
   UPP_PUP,
@@ -72,10 +72,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = {
-  {KC_TAB,      KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC      },
-  {TD(ESC_CAP), KC_A,    KC_S,    KC_D,    KC_F,  KC_G,   KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT      },
-  {KC_LSFT,     KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,   KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_SLSH, SFT_T(KC_ENT)},
-  {BACKLIT,     KC_LCTL, KC_LALT, KC_LGUI, LOWER, KC_SPC, KC_SPC, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT      }
+  {KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC      },
+  {CTL_T(KC_ESC), KC_A,    KC_S,    KC_D,    KC_F,  KC_G,   KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT      },
+  {TD(SFT_CAP),   KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,   KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_SLSH, SFT_T(KC_ENT)},
+  {BACKLIT,       KC_LCTL, KC_LALT, KC_LGUI, LOWER, KC_SPC, KC_SPC, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT      }
 },
 
 /* Colemak
@@ -192,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [ESC_CAP] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_CAPS),
+  [SFT_CAP] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
   [LFT_HOM] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT, KC_HOME),
   [DWN_PDN] = ACTION_TAP_DANCE_DOUBLE(KC_DOWN, KC_PGDN),
   [UPP_PUP] = ACTION_TAP_DANCE_DOUBLE(KC_UP, KC_PGUP),
@@ -249,7 +249,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case QWERTY:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-          PLAY_NOTE_ARRAY(tone_qwerty, false, 0);
+          PLAY_SONG(tone_qwerty);
         #endif
         persistent_default_layer_set(1UL<<_QWERTY);
       }
@@ -258,7 +258,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case COLEMAK:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-          PLAY_NOTE_ARRAY(tone_colemak, false, 0);
+          PLAY_SONG(tone_colemak);
         #endif
         persistent_default_layer_set(1UL<<_COLEMAK);
       }
@@ -267,7 +267,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case DVORAK:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-          PLAY_NOTE_ARRAY(tone_dvorak, false, 0);
+          PLAY_SONG(tone_dvorak);
         #endif
         persistent_default_layer_set(1UL<<_DVORAK);
       }
@@ -308,7 +308,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
           stop_all_notes();
-          PLAY_NOTE_ARRAY(tone_plover, false, 0);
+          PLAY_SONG(tone_plover);
         #endif
         layer_off(_RAISE);
         layer_off(_LOWER);
@@ -326,7 +326,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case EXT_PLV:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
-          PLAY_NOTE_ARRAY(tone_plover_gb, false, 0);
+          PLAY_SONG(tone_plover_gb);
         #endif
         layer_off(_PLOVER);
       }
@@ -347,12 +347,12 @@ void matrix_init_user(void) {
 void startup_user()
 {
     _delay_ms(20); // gets rid of tick
-    PLAY_NOTE_ARRAY(tone_startup, false, 0);
+    PLAY_SONG(tone_startup);
 }
 
 void shutdown_user()
 {
-    PLAY_NOTE_ARRAY(tone_goodbye, false, 0);
+    PLAY_SONG(tone_goodbye);
     _delay_ms(150);
     stop_all_notes();
 }
@@ -364,7 +364,7 @@ void music_on_user(void)
 
 void music_scale_user(void)
 {
-    PLAY_NOTE_ARRAY(music_scale, false, 0);
+    PLAY_SONG(music_scale);
 }
 
 #endif

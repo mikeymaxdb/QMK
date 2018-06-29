@@ -16,6 +16,11 @@ This is a keyboard firmware based on the [tmk\_keyboard firmware](http://github.
 ## Documentation
 
 * [See the official documentation on docs.qmk.fm](https://docs.qmk.fm)
+* [Planck](/keyboards/planck/)
+* [Preonic](/keyboards/preonic/)
+* [ErgoDox EZ](/keyboards/ergodox_ez/)
+* [Clueboard](/keyboards/clueboard/)
+* [Cluepad](/keyboards/clueboard/17/)
 
 The docs are hosted on [Gitbook](https://www.gitbook.com/book/qmk/firmware/details) and [GitHub](/docs/) (they are synced). You can request changes by making a fork and [pull request](https://github.com/qmk/qmk_firmware/pulls), or by clicking the "suggest an edit" link on any page of the docs.
 
@@ -26,4 +31,3 @@ QMK is developed and maintained by Jack Humbert of OLKB with contributions from 
 ## Official website
 
 [http://qmk.fm](http://qmk.fm) is the official website of QMK, where you can find links to this page, the documentation, and the keyboards supported by QMK.
-

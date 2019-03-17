@@ -30,7 +30,11 @@ enum planck_layers {
 enum planck_keycodes {
     QWERTY = SAFE_RANGE,
     COLEMAK,
+
+    VIM_o,
+    VIM_u,
 };
+
 #define SUP_1 LGUI(KC_1)
 #define SUP_2 LGUI(KC_2)
 #define SUP_3 LGUI(KC_3)
@@ -73,9 +77,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
     [_NAV] = LAYOUT_planck_grid(
-        _______, SUP_1,   SUP_2,   SUP_3,   SUP_4,   _______, _______, _______, _______, _______, _______, _______,
-        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, SUP_1,   SUP_2,   SUP_3,   SUP_4,   _______, KC_DOWN, KC_RGHT, VIM_u,   _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, KC_LEFT, _______, _______, _______, VIM_o,   _______,
+        _______, _______, _______, _______, _______, _______, KC_UP,   _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
     [_ADJUST] = LAYOUT_planck_grid(
@@ -87,6 +91,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    bool shifted = (keyboard_report->mods & (MOD_BIT(KC_LSFT))) != 0;
+
     switch (keycode) {
         case QWERTY:
             if (record->event.pressed) {
@@ -100,6 +106,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+        case VIM_o:
+            if (record->event.pressed) {
+                if (shifted) {
+                    SEND_STRING(SS_UP(X_LSHIFT));
+                    SEND_STRING(SS_TAP(X_HOME)"\n"SS_TAP(X_UP));
+                } else {
+                    SEND_STRING(SS_TAP(X_END)"\n");
+                }
+            }
+            break;
+        case VIM_u:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTRL("z"));
+            }
+            break;
+
     }
     return true;
 }

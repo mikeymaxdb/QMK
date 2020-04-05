@@ -90,7 +90,9 @@ void persistent_default_layer_set(uint16_t default_layer) {
 }
 
 void matrix_init_user(void) {
+    #ifdef RGBLIGHT_ENABLE
     RGB_current_mode = rgblight_config.mode;
+    #endif
     iota_gfx_init(!has_usb());   // turns on the display
 }
 
@@ -136,16 +138,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case RGB_MOD:
             if (record->event.pressed) {
+    #ifdef RGBLIGHT_ENABLE
                 rgblight_mode(RGB_current_mode);
                 rgblight_step();
                 RGB_current_mode = rgblight_config.mode;
+    #endif
             }
             return false;
         case RGBRST:
             if (record->event.pressed) {
+    #ifdef RGBLIGHT_ENABLE
                 eeconfig_update_rgblight_default();
                 rgblight_enable();
                 RGB_current_mode = rgblight_config.mode;
+    #endif
             }
             break;
     }
